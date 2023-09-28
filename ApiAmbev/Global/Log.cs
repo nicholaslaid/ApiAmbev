@@ -11,7 +11,7 @@ namespace ApiAmbev.Global
             //verifica se a pasta existe 
             if (!Directory.Exists(Config.folderPath))
             {
-                Directory.CreateDirectory(Config.folderPath);
+                Directory.CreateDirectory(Config.folderPath); 
             }
             //verifica se o arquivo existe
             if (!File.Exists(Config.filePath))

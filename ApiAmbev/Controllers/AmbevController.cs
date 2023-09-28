@@ -15,9 +15,9 @@ namespace ApiAmbev.Controllers
         public JsonResult Handshake()
         {
             Result result = new Result();
-            bool resultado = result.success = true;
+             result.success = true;
 
-            return new JsonResult(resultado);
+            return new JsonResult(result);
         }
 
         [HttpGet]
