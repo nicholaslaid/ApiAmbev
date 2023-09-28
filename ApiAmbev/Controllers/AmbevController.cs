@@ -27,7 +27,7 @@ namespace ApiAmbev.Controllers
         {
             Result result = new Result();
             Security security = new Security();
-
+             
             try
             {
                 bool resultado = security.ValidateToken(token);
