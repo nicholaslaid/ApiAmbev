@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS logs;
+CREATE TABLE IF NOT EXISTS logs(
+	id BIGSERIAL PRIMARY KEY,
+	creation_date TIMESTAMP,
+	type VARCHAR(10),
+	message TEXT
+);
+
+SELECT * FROM logs;

@@ -16,16 +16,20 @@ namespace ApiAmbev.Controllers
         {
             Security security = new Security();
             Result result = new Result();
+            Cripto cripto = new Cripto();
             try
             {
-                if (!string.IsNullOrEmpty(user) && !string.IsNullOrEmpty(password))
+                string usuario = cripto.DecryptTrypleDES(user);
+                string senha = cripto.DecryptTrypleDES(password);
+
+                if (!string.IsNullOrEmpty(usuario) && !string.IsNullOrEmpty(senha))
                 {
-                    string token = security.GenerateToken(user, password);
+                    string token = security.GenerateToken(usuario, senha);
 
                     if (!string.IsNullOrEmpty(token))
                     {
                         result.success = true;
-                        result.data = token;
+                        result.data = cripto.EncryptTripleDES(token);
                     }
                     else
                     {

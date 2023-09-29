@@ -14,8 +14,12 @@ namespace ApiAmbev.Controllers
 
         public JsonResult Handshake()
         {
+            
             Result result = new Result();
-             result.success = true;
+            result.success = true;
+             result.data = "true";
+
+
 
             return new JsonResult(result);
         }
@@ -27,10 +31,13 @@ namespace ApiAmbev.Controllers
         {
             Result result = new Result();
             Security security = new Security();
-             
+            Cripto cripto = new Cripto();
+
             try
             {
-                bool resultado = security.ValidateToken(token);
+                string tk = cripto.DecryptTrypleDES(token);
+
+                bool resultado = security.ValidateToken(tk);
 
                 if (resultado)
                 {
