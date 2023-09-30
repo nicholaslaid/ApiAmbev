@@ -17,8 +17,8 @@ namespace ApiAmbev.DataBase
             {
                 using (NpgsqlCommand cmd = new NpgsqlCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO produtos (nome, marca, tipo, volume, frasco) " +
-                                          @"VALUES (@nome, @marca, @tipo, @volume, @frasco);";
+                    cmd.CommandText = @"INSERT INTO produtos (nome, marca, tipo, volume, frasco, data) " +
+                                          @"VALUES (@nome, @marca, @tipo, @volume, @frasco, @data);";
 
 
                     cmd.Parameters.AddWithValue("@nome", products.nome);
@@ -26,6 +26,7 @@ namespace ApiAmbev.DataBase
                     cmd.Parameters.AddWithValue("@tipo", products.tipo);
                     cmd.Parameters.AddWithValue("@volume", products.volume);
                     cmd.Parameters.AddWithValue("@frasco", products.frasco);
+                    cmd.Parameters.AddWithValue("@data", DateTime.Now);
 
                     using (cmd.Connection = dba.OpenConnection())
                     {
@@ -63,7 +64,7 @@ namespace ApiAmbev.DataBase
                             products.frasco = reader["frasco"].ToString();
                             products.volume = float.Parse(reader["volume"].ToString());
                             products.tipo = reader["tipo"].ToString();
-
+                            products.data = Convert.ToDateTime(reader["data"].ToString());
 
                             productos.Add(products);
                         }
