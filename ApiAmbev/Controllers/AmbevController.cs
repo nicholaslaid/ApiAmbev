@@ -35,8 +35,17 @@ namespace ApiAmbev.Controllers
 
             try
             {
-                string tk = cripto.DecryptTrypleDES(token);
+                string tk = string.Empty;
+                try
+                {
 
+                    tk = cripto.DecryptTrypleDES(token);
+                    Log.Add(LogType.success, "descriptografado");
+                }
+                catch(Exception e)
+                {
+                    Log.Add(LogType.error, "Erro ao descriptografar");
+                }
                 bool resultado = security.ValidateToken(tk);
 
                 if (resultado)

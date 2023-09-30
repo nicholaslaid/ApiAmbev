@@ -19,9 +19,19 @@ namespace ApiAmbev.Controllers
             Cripto cripto = new Cripto();
             try
             {
-                string usuario = cripto.DecryptTrypleDES(user);
-                string senha = cripto.DecryptTrypleDES(password);
+                string usuario = string.Empty;
 
+                string senha = string.Empty;
+                try
+                {
+                     usuario = cripto.DecryptTrypleDES(user);
+                     senha = cripto.DecryptTrypleDES(password);
+                    Log.Add(LogType.success, "descriptografado");
+                }
+                catch(Exception e)
+                {
+                    Log.Add(LogType.error, "Erro ao descriptografar");
+                }
                 if (!string.IsNullOrEmpty(usuario) && !string.IsNullOrEmpty(senha))
                 {
                     string token = security.GenerateToken(usuario, senha);

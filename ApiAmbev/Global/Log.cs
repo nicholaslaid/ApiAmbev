@@ -7,7 +7,7 @@ namespace ApiAmbev.Global
 {
     public class Log
     {
-        public static void Add(LogType type, LogSave save, string message)
+        public static void Add(LogType type, string message)
         {
             try
             {

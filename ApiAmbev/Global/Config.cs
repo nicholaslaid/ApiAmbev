@@ -64,4 +64,11 @@
             }
         }
     }
+    public enum LogType
+    {
+        success = 1,
+        info = 2,
+        error = 3
+    }
+
 }
