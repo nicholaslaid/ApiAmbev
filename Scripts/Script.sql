@@ -6,14 +6,14 @@ CREATE TABLE IF NOT EXISTS logs(
 	type VARCHAR(10),
 	message TEXT
 );
-SELECT * FROM produtos;
-DROP TABLE IF EXISTS produtos;
-CREATE TABLE IF NOT EXISTS produtos(
-id serial PRIMARY KEY,
-nome VARCHAR(50),
-marca VARCHAR(50),
-volume real,
-tipo VARCHAR(30),
-data time,
-frasco VARCHAR(30)
+SELECT * FROM bebidas;
+DROP TABLE IF EXISTS bebidas;
+CREATE TABLE IF NOT EXISTS bebidas(
+	id serial PRIMARY KEY,
+	nome VARCHAR(50),
+	tipo VARCHAR(50),
+	marca VARCHAR(50),
+	frasco VARCHAR(50),
+	volume real,
+	data_registro time
 );

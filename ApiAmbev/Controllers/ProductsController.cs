@@ -4,11 +4,13 @@ using ApiAmbev.Global;
 using ApiAmbev.DataBase;
 using Newtonsoft.Json;
 using static ApiAmbev.Global.Config;
+using Microsoft.Extensions.Primitives;
 
 namespace ApiAmbev.Controllers
 {
-    [Route("api/Ambev")]
     [ApiController]
+    [Route("api/Ambev")]
+
     public class ProductsController : Controller
     {
         [HttpGet]
@@ -39,8 +41,8 @@ namespace ApiAmbev.Controllers
                         result.errorCode = Convert.ToInt32(ErrorCode.JobNotFoundError);
                         result.errorMessage = ErrorCode.JobNotFoundError.ToString();
                     }
-                }
-                else
+               }
+               else
                 {
                     result.success = false;
                     result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + "Token invalido";
@@ -54,7 +56,7 @@ namespace ApiAmbev.Controllers
         }
         [HttpPost]
         [Route("Add")]
-        public JsonResult Add(Products product, string token)
+        public JsonResult Add(Request request)
         {
             Security security = new Security();
             Result result = new Result();
@@ -62,11 +64,11 @@ namespace ApiAmbev.Controllers
 
             try
             {
-                if (security.ValidateToken(token))
+                if (security.ValidateToken(request.token))
                 {
-                    product.id = methods.GetAll().Count + 1;
+                    request.produtos.id = methods.GetAll().Count + 1;
 
-                    bool a = methods.Add(product);
+                    bool a = methods.Add(request.produtos);
 
                     if (a)
                     {
@@ -76,12 +78,12 @@ namespace ApiAmbev.Controllers
                     {
                         result.success = false;
                     }
-                }
-                else
+               }
+               else
                 {
-                    result.success = false;
+                   result.success = false;
                     result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + "Token invalido";
-                }
+               }
 
             }
 
@@ -118,9 +120,9 @@ namespace ApiAmbev.Controllers
                     }
                 }
                 else
-                {
-                    result.success = false;
-                    result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + "Token invalido";
+               {
+                  result.success = false;
+                  result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + "Token invalido";
                 }
             }
 

@@ -11,7 +11,8 @@
 
         public string marca { get; set; }
 
-        public DateTime data { get; set; }
         public string frasco { get; set; }
+
+        public DateTime data {get;set;}
     }
 }

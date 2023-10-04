@@ -4,8 +4,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApiAmbev.Controllers
 {
-    [Route("api/Ambev")]
     [ApiController]
+    [Route("api/Ambev")]
+    
     public class AmbevController : ControllerBase
     {
 
