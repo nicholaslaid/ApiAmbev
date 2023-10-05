@@ -17,8 +17,8 @@ namespace ApiAmbev.DataBase
             {
                 using (NpgsqlCommand cmd = new NpgsqlCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO bebidas (nome, marca, tipo, volume, frasco, data_registro) " +
-                                          @"VALUES (@nome, @marca, @tipo, @volume, @frasco, @data_registro);";
+                    cmd.CommandText = @"INSERT INTO bebidas (nome, marca, tipo, volume, frasco, deleted, data_registro) " +
+                                          @"VALUES (@nome, @marca, @tipo, @volume, @frasco, @deleted, @data_registro);";
 
 
                     cmd.Parameters.AddWithValue("@nome", products.nome);
@@ -27,6 +27,7 @@ namespace ApiAmbev.DataBase
                     cmd.Parameters.AddWithValue("@volume", products.volume);
                     cmd.Parameters.AddWithValue("@frasco", products.frasco);
                     cmd.Parameters.AddWithValue("@data_registro", DateTime.Now);
+                    cmd.Parameters.AddWithValue("@deleted", products.deleted = false);
 
                     using (cmd.Connection = dba.OpenConnection())
                     {
@@ -51,7 +52,9 @@ namespace ApiAmbev.DataBase
             {
                 cmd.CommandText = @"SELECT p.id, p.nome, p.marca, p.tipo, p.volume, p.frasco, p.data_registro " +
                                       @"FROM bebidas p " +
+                                      @"WHERE p.deleted = false " + 
                                       @"ORDER BY p.id;";
+
                 using (cmd.Connection = dba.OpenConnection()) {
                     using (NpgsqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -83,6 +86,7 @@ namespace ApiAmbev.DataBase
 
         public bool Delete(int id)
         {
+            bool deleted = true;
             bool result= false;
             DataBaseAccess dba = new DataBaseAccess();
 
@@ -90,10 +94,12 @@ namespace ApiAmbev.DataBase
             {
                 using(NpgsqlCommand cmd = new NpgsqlCommand())
                 {
-                    cmd.CommandText = @"Delete from bebidas " +
-                                       @"Where id = @id;";
+                    cmd.CommandText = @"UPDATE bebidas " +
+                                      @"SET deleted = @deleted " +
+                                      @"WHERE id = @id;";
 
                     cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@deleted", deleted);
 
                     using(cmd.Connection = dba.OpenConnection())
                     {

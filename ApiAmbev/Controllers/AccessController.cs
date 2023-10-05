@@ -26,7 +26,7 @@ namespace ApiAmbev.Controllers
                 {
                      usuario = cripto.DecryptTrypleDES(user);
                      senha = cripto.DecryptTrypleDES(password);
-                    Log.Add(LogType.success, "descriptografado");
+                  
                 }
                 catch(Exception e)
                 {

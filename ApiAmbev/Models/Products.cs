@@ -14,5 +14,7 @@
         public string frasco { get; set; }
 
         public DateTime data {get;set;}
+
+        public bool deleted { get; set;}
     }
 }

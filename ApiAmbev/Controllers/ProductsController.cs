@@ -33,13 +33,14 @@ namespace ApiAmbev.Controllers
                     {
                         result.success = true;
                         result.data = JsonConvert.SerializeObject(produtos);
-
+                        Log.Add(LogType.success, "GetAll Realizado com successo");
                     }
                     else
                     {
                         result.success = false;
                         result.errorCode = Convert.ToInt32(ErrorCode.JobNotFoundError);
                         result.errorMessage = ErrorCode.JobNotFoundError.ToString();
+                        Log.Add(LogType.error, "GetAll Não foi realizado");
                     }
                }
                else
@@ -51,6 +52,7 @@ namespace ApiAmbev.Controllers
             catch (Exception ex)
             {
                 return new JsonResult(new { success = false, msg = ex.Message });
+               
             }
             return new JsonResult(result);
         }
@@ -73,10 +75,12 @@ namespace ApiAmbev.Controllers
                     if (a)
                     {
                         result.success = true;
+                        Log.Add(LogType.success, "Add realizado com successo");
                     }
                     else
                     {
                         result.success = false;
+                        Log.Add(LogType.error, "Add não foi realizado");
                     }
                }
                else
@@ -92,6 +96,7 @@ namespace ApiAmbev.Controllers
                 result.success = false;
                 result.errorCode = Convert.ToInt32(ErrorCode.UnhandledException);
                 result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + ex.Message;
+               
             }
             return new JsonResult(result);
         }
@@ -110,13 +115,14 @@ namespace ApiAmbev.Controllers
                     bool a = methods.Delete(id);
                     if (a)
                     {
-
-                      result.success = true;
+                        Log.Add(LogType.success, "Delete realizado com successo");
+                        result.success = true;
 
                     }
                     else
                     {
                         result.success = false;
+                        Log.Add(LogType.error, "Delete não foi realizado");
                     }
                 }
                 else
@@ -131,6 +137,7 @@ namespace ApiAmbev.Controllers
                 result.success = false;
                 result.errorCode = Convert.ToInt32(ErrorCode.UnhandledException);
                 result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + ex.Message;
+                Log.Add(LogType.error, "Delete não foi realizado");
             }
             return new JsonResult(result);
         }

@@ -1,6 +1,7 @@
 ﻿using ApiAmbev.Global;
 using ApiAmbev.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.RegularExpressions;
 
 namespace ApiAmbev.Controllers
 {
@@ -39,9 +40,10 @@ namespace ApiAmbev.Controllers
                 string tk = string.Empty;
                 try
                 {
-
+                    //token = Regex.Replace(token, @"\s", "");
+                    token = token.Replace(" ", "+");
                     tk = cripto.DecryptTrypleDES(token);
-                    Log.Add(LogType.success, "descriptografado");
+                 
                 }
                 catch(Exception e)
                 {
