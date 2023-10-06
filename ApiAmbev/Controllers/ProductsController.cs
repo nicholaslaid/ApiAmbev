@@ -21,6 +21,7 @@ namespace ApiAmbev.Controllers
             Result result = new Result();
             Security security = new Security();
             Methods methods = new Methods();
+            Cripto cripto = new Cripto();
 
             try
             {
@@ -32,7 +33,9 @@ namespace ApiAmbev.Controllers
                     if (produtos.Count > 0)
                     {
                         result.success = true;
-                        result.data = JsonConvert.SerializeObject(produtos);
+                       
+                        result.data = cripto.EncryptTripleDES(JsonConvert.SerializeObject(produtos));
+                        
                         Log.Add(LogType.success, "GetAll Realizado com successo");
                     }
                     else
@@ -58,17 +61,32 @@ namespace ApiAmbev.Controllers
         }
         [HttpPost]
         [Route("Add")]
-        public JsonResult Add(Request request)
+        public JsonResult Add(string desktop_data)
         {
             Security security = new Security();
             Result result = new Result();
             Methods methods = new Methods();
+            Cripto cripto = new Cripto();
+
+            desktop_data = cripto.DecryptTrypleDES(desktop_data);
+
+            Request request = JsonConvert.DeserializeObject<Request>(desktop_data);
+
 
             try
             {
                 if (security.ValidateToken(request.token))
                 {
                     request.produtos.id = methods.GetAll().Count + 1;
+
+                    try
+                    {
+
+                    }
+                    catch (Exception e)
+                    {
+
+                    }
 
                     bool a = methods.Add(request.produtos);
 
