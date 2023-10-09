@@ -16,5 +16,6 @@ CREATE TABLE IF NOT EXISTS bebidas(
 	frasco VARCHAR(50),
 	volume real,
 	deleted bool,
-	data_registro time
+	data_registro time,
+	valor_unitario real
 );
