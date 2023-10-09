@@ -16,5 +16,7 @@
         public DateTime data {get;set;}
 
         public bool deleted { get; set;}
+
+        public double valor_unitario { get; set; }
     }
 }

@@ -17,8 +17,8 @@ namespace ApiAmbev.DataBase
             {
                 using (NpgsqlCommand cmd = new NpgsqlCommand())
                 {
-                    cmd.CommandText = @"INSERT INTO bebidas (nome, marca, tipo, volume, frasco, deleted, data_registro) " +
-                                          @"VALUES (@nome, @marca, @tipo, @volume, @frasco, @deleted, @data_registro);";
+                    cmd.CommandText = @"INSERT INTO bebidas (nome, marca, tipo, volume, frasco, deleted, data_registro, valor_unitario) " +
+                                          @"VALUES (@nome, @marca, @tipo, @volume, @frasco, @deleted, @data_registro, @valor_unitario);";
 
 
                     cmd.Parameters.AddWithValue("@nome", products.nome);
@@ -28,7 +28,7 @@ namespace ApiAmbev.DataBase
                     cmd.Parameters.AddWithValue("@frasco", products.frasco);
                     cmd.Parameters.AddWithValue("@data_registro", DateTime.Now);
                     cmd.Parameters.AddWithValue("@deleted", products.deleted = false);
-
+                    cmd.Parameters.AddWithValue("@valor_unitario", products.valor_unitario);
                     using (cmd.Connection = dba.OpenConnection())
                     {
                         cmd.ExecuteNonQuery();
@@ -50,7 +50,7 @@ namespace ApiAmbev.DataBase
 
             using (NpgsqlCommand cmd = new NpgsqlCommand())
             {
-                cmd.CommandText = @"SELECT p.id, p.nome, p.marca, p.tipo, p.volume, p.frasco, p.data_registro " +
+                cmd.CommandText = @"SELECT p.id, p.nome, p.marca, p.tipo, p.volume, p.frasco, p.data_registro, p.valor_unitario " +
                                       @"FROM bebidas p " +
                                       @"WHERE p.deleted = false " + 
                                       @"ORDER BY p.id;";
@@ -68,6 +68,7 @@ namespace ApiAmbev.DataBase
                             products.volume = float.Parse(reader["volume"].ToString());
                             products.tipo = reader["tipo"].ToString();
                             products.data = Convert.ToDateTime(reader["data_registro"].ToString());
+                            products.valor_unitario = float.Parse(reader["valor_unitario"].ToString());
 
                             productos.Add(products);
                         }

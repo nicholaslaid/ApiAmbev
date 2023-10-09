@@ -4,9 +4,11 @@
     {
         public enum ErrorCode
         {
-            UnhandledException = 1,
-            UnknownError = 2,
-            JobNotFoundError = 3
+             NoError = 0,
+	        UnknownError = 1,
+            ProductAddError = 2,
+            ProductGetError = 3,
+            ProductDeleteError = 4
         }
         public static string token = string.Empty;
         public static DateTime lifeTime = DateTime.MinValue;

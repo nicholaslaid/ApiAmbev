@@ -35,27 +35,31 @@ namespace ApiAmbev.Controllers
                         result.success = true;
                        
                         result.data = cripto.EncryptTripleDES(JsonConvert.SerializeObject(produtos));
-                        
+                        result.errorCode = Convert.ToInt32(ErrorCode.NoError);
+                        result.errorMessage = ErrorCode.NoError.ToString() + "Get all feito com successo";
                         Log.Add(LogType.success, "GetAll Realizado com successo");
                     }
                     else
                     {
                         result.success = false;
-                        result.errorCode = Convert.ToInt32(ErrorCode.JobNotFoundError);
-                        result.errorMessage = ErrorCode.JobNotFoundError.ToString();
+                        result.errorCode = Convert.ToInt32(ErrorCode.ProductGetError);
+                        result.errorMessage = ErrorCode.ProductGetError.ToString() + "GetAll Não foi realizado";
                         Log.Add(LogType.error, "GetAll Não foi realizado");
                     }
                }
                else
                 {
                     result.success = false;
-                    result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + "Token invalido";
+                    result.errorCode = Convert.ToInt32(ErrorCode.ProductGetError);
+                    result.errorMessage = ErrorCode.ProductGetError.ToString() + "Token invalido";
                 }
             }
             catch (Exception ex)
             {
-                return new JsonResult(new { success = false, msg = ex.Message });
-               
+                result.success = false;
+                result.errorCode = Convert.ToInt32(ErrorCode.ProductGetError);
+                result.errorMessage = ErrorCode.ProductGetError.ToString() + " - " + ex.Message;
+
             }
             return new JsonResult(result);
         }
@@ -93,27 +97,32 @@ namespace ApiAmbev.Controllers
                     if (a)
                     {
                         result.success = true;
+                        result.errorMessage = ErrorCode.NoError.ToString() + "Produto adicionado com successo";
+                        result.errorCode = Convert.ToInt32(ErrorCode.NoError);
                         Log.Add(LogType.success, "Add realizado com successo");
                     }
                     else
                     {
                         result.success = false;
+                        result.errorMessage = ErrorCode.ProductAddError.ToString() + " - " + "Não foi possivel adicionar este produto";
+                        result.errorCode = Convert.ToInt32(ErrorCode.ProductAddError);
                         Log.Add(LogType.error, "Add não foi realizado");
                     }
                }
                else
                 {
                    result.success = false;
-                    result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + "Token invalido";
-               }
+                    result.errorMessage = ErrorCode.ProductAddError.ToString() + " - " + "Token invalido";
+                    result.errorCode = Convert.ToInt32(ErrorCode.ProductAddError);
+                }
 
             }
 
             catch (Exception ex)
             {
                 result.success = false;
-                result.errorCode = Convert.ToInt32(ErrorCode.UnhandledException);
-                result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + ex.Message;
+                result.errorCode = Convert.ToInt32(ErrorCode.ProductAddError);
+                result.errorMessage = ErrorCode.ProductAddError.ToString() + " - " + ex.Message;
                
             }
             return new JsonResult(result);
@@ -133,28 +142,34 @@ namespace ApiAmbev.Controllers
                     bool a = methods.Delete(id);
                     if (a)
                     {
-                        Log.Add(LogType.success, "Delete realizado com successo");
                         result.success = true;
+                        result.errorMessage = ErrorCode.NoError.ToString() + " - " + "Delete realizado com successo";
+                        result.errorCode = Convert.ToInt32(ErrorCode.NoError);
+                        Log.Add(LogType.success, "Delete realizado com successo");
+                       
 
                     }
                     else
                     {
                         result.success = false;
+                        result.errorMessage = ErrorCode.ProductDeleteError.ToString() + " - " + "Delete não foi realizado";
+                        result.errorCode = Convert.ToInt32(ErrorCode.ProductDeleteError);
                         Log.Add(LogType.error, "Delete não foi realizado");
                     }
                 }
                 else
                {
                   result.success = false;
-                  result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + "Token invalido";
+                  result.errorMessage = ErrorCode.ProductDeleteError.ToString() + " - " + "Token invalido";
+                    result.errorCode = Convert.ToInt32(ErrorCode.ProductDeleteError);
                 }
             }
 
             catch (Exception ex)
             {
                 result.success = false;
-                result.errorCode = Convert.ToInt32(ErrorCode.UnhandledException);
-                result.errorMessage = ErrorCode.UnhandledException.ToString() + " - " + ex.Message;
+                result.errorCode = Convert.ToInt32(ErrorCode.ProductDeleteError);
+                result.errorMessage = ErrorCode.ProductDeleteError.ToString() + " - " + ex.Message;
                 Log.Add(LogType.error, "Delete não foi realizado");
             }
             return new JsonResult(result);
