@@ -4,6 +4,6 @@
     {
         public string token { get; set; }
 
-        public Products produtos { get; set; }
+        public string data { get; set; }
     }
 }

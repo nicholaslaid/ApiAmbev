@@ -25,7 +25,9 @@ namespace ApiAmbev.Controllers
 
             try
             {
-                if (security.ValidateToken(token))
+                token = token.Replace(" ", "+");
+                string tk = cripto.DecryptTrypleDES(token);
+                if (security.ValidateToken(tk))
                 {
                     List<Products> produtos = new List<Products>();
                     produtos = methods.GetAll();
@@ -63,36 +65,35 @@ namespace ApiAmbev.Controllers
             }
             return new JsonResult(result);
         }
+
         [HttpPost]
         [Route("Add")]
-        public JsonResult Add(string desktop_data)
+        public JsonResult Add(Request request)
         {
             Security security = new Security();
             Result result = new Result();
             Methods methods = new Methods();
             Cripto cripto = new Cripto();
 
-            desktop_data = cripto.DecryptTrypleDES(desktop_data);
-
-            Request request = JsonConvert.DeserializeObject<Request>(desktop_data);
-
-
             try
             {
-                if (security.ValidateToken(request.token))
+                string token = cripto.DecryptTrypleDES(request.token);
+
+              
+
+                if (security.ValidateToken(token))
                 {
-                    request.produtos.id = methods.GetAll().Count + 1;
+                    Products product = new Products();
 
-                    try
-                    {
+                    string produtoString = cripto.DecryptTrypleDES(request.data);
 
-                    }
-                    catch (Exception e)
-                    {
+                    product = JsonConvert.DeserializeObject<Products>(produtoString);
 
-                    }
+                    product.id = methods.GetAll().Count + 1;
 
-                    bool a = methods.Add(request.produtos);
+                 
+
+                    bool a = methods.Add(product);
 
                     if (a)
                     {
@@ -127,9 +128,9 @@ namespace ApiAmbev.Controllers
             }
             return new JsonResult(result);
         }
+
         [HttpDelete]
         [Route("Delete")]
-
         public JsonResult Delete(string token, int id)
         {
             Security security = new Security();
