@@ -79,7 +79,7 @@ namespace ApiAmbev.Controllers
             {
                 string token = cripto.DecryptTrypleDES(request.token);
 
-              
+
 
                 if (security.ValidateToken(token))
                 {
@@ -91,7 +91,7 @@ namespace ApiAmbev.Controllers
 
                     product.id = methods.GetAll().Count + 1;
 
-                 
+
 
                     bool a = methods.Add(product);
 
@@ -109,10 +109,10 @@ namespace ApiAmbev.Controllers
                         result.errorCode = Convert.ToInt32(ErrorCode.ProductAddError);
                         Log.Add(LogType.error, "Add não foi realizado");
                     }
-               }
-               else
+                }
+                else
                 {
-                   result.success = false;
+                    result.success = false;
                     result.errorMessage = ErrorCode.ProductAddError.ToString() + " - " + "Token invalido";
                     result.errorCode = Convert.ToInt32(ErrorCode.ProductAddError);
                 }
@@ -124,10 +124,11 @@ namespace ApiAmbev.Controllers
                 result.success = false;
                 result.errorCode = Convert.ToInt32(ErrorCode.ProductAddError);
                 result.errorMessage = ErrorCode.ProductAddError.ToString() + " - " + ex.Message;
-               
+
             }
             return new JsonResult(result);
         }
+
 
         [HttpDelete]
         [Route("Delete")]

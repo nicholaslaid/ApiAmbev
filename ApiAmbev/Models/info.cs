@@ -6,7 +6,7 @@ namespace ApiAmbev.Models
     {
 
         public int id_venda { get; set; }   
-       public string nome_produto { get; set; }
+       public int id_produto { get; set; }
         
         public int qtd { get; set; }
 

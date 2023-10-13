@@ -135,7 +135,7 @@ namespace ApiAmbev.DataBase
 
             using (NpgsqlCommand cmd = new NpgsqlCommand())
             {
-                cmd.CommandText = @"Select v.id, p.nome_produto, p.quantidade, p.valor_unitario, p.subtotal " +
+                cmd.CommandText = @"Select v.id, p.id_produto, p.quantidade, p.valor_unitario, p.subtotal " +
                                      @"from produtos_vendidos p, vendas v " +
                                         @"where p.id_venda = v.id;";
 
@@ -149,7 +149,7 @@ namespace ApiAmbev.DataBase
                         {
                             info Infos = new info();
                             Infos.id_venda = Convert.ToInt32(reader["id"]);
-                            Infos.nome_produto = reader["nome_produto"].ToString();
+                            Infos.id_produto = Convert.ToInt32(reader["id_produto"]);
                             Infos.qtd = Convert.ToInt32(reader["quantidade"]);
                             Infos.valor_unitario = float.Parse(reader["valor_unitario"].ToString());
                             Infos.subtotal = float.Parse(reader["subtotal"].ToString());
