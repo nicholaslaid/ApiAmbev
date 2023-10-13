@@ -85,6 +85,93 @@ namespace ApiAmbev.DataBase
             return productos;
         }
 
+        public List<Vendas> GetAllVendas()
+        {
+            List<Vendas> vendass = new List<Vendas>();
+            DataBaseAccess dba = new DataBaseAccess();
+
+            using (NpgsqlCommand cmd = new NpgsqlCommand())
+            {
+                cmd.CommandText = @"SELECT v.id, v.nome_cliente, v.nome_vendedor, v.qtd_produtos, v.data, v.valor_total " +
+                                      @"FROM vendas v " +
+                                      @"ORDER BY v.id;";
+
+
+                using (cmd.Connection = dba.OpenConnection())
+                {
+                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            Vendas vendas = new Vendas();
+                            vendas.id = Convert.ToInt32(reader["id"]);
+                            vendas.Cliente = reader["nome_cliente"].ToString();
+                            vendas.Vendedor = reader["nome_vendedor"].ToString();
+                            vendas.qtd_produtos = Convert.ToInt32(reader["qtd_produtos"]);
+                            vendas.valorTotal = float.Parse(reader["valor_total"].ToString());
+                            vendas.dataVenda = Convert.ToDateTime(reader["data"].ToString());
+
+
+                            vendass.Add(vendas);
+                        }
+                    }
+                }
+            }
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return vendass;
+        }
+
+        public List<info> VendasProdutos()
+        {
+            List<info> Info = new List<info>();
+            DataBaseAccess dba = new DataBaseAccess();
+
+            using (NpgsqlCommand cmd = new NpgsqlCommand())
+            {
+                cmd.CommandText = @"Select v.id, p.nome_produto, p.quantidade, p.valor_unitario, p.subtotal " +
+                                     @"from produtos_vendidos p, vendas v " +
+                                        @"where p.id_venda = v.id;";
+
+                
+
+                using (cmd.Connection = dba.OpenConnection())
+                {
+                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            info Infos = new info();
+                            Infos.id_venda = Convert.ToInt32(reader["id"]);
+                            Infos.nome_produto = reader["nome_produto"].ToString();
+                            Infos.qtd = Convert.ToInt32(reader["quantidade"]);
+                            Infos.valor_unitario = float.Parse(reader["valor_unitario"].ToString());
+                            Infos.subtotal = float.Parse(reader["subtotal"].ToString());
+
+
+                            Info.Add(Infos);
+                        }
+                    }
+                }
+            }
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Info;
+        }
+
+
         public bool Delete(int id)
         {
             bool deleted = true;
