@@ -21,8 +21,8 @@ CREATE TABLE IF NOT EXISTS logs(
 	message TEXT
 );
 CREATE TABLE IF NOT EXISTS bebidas(
-	id serial,
-	nome VARCHAR(50) PRIMARY KEY,
+	id serial  PRIMARY KEY,
+	nome VARCHAR(50),
 	tipo VARCHAR(50),
 	marca VARCHAR(50),
 	frasco VARCHAR(50),
@@ -57,8 +57,8 @@ CREATE TABLE IF NOT EXISTS vendas(
 	
 );
 CREATE TABLE IF NOT EXISTS produtos_vendidos(
-	id serial PRIMARY KEY,
-	nome_produto VARCHAR(50) REFERENCES bebidas,
+	id serial,
+	id_produto Integer REFERENCES bebidas,
 	id_venda INTEGER,
 	quantidade integer,
 	subtotal real,
@@ -84,10 +84,16 @@ INSERT INTO vendas(data, nome_cliente, nome_vendedor, qtd_produtos, valor_total)
 INSERT INTO vendas(data, nome_cliente, nome_vendedor, qtd_produtos, valor_total) Values('2023-09-28', 'Joao', 'Lorenzo', 3, 300 );
 INSERT INTO vendas(data, nome_cliente, nome_vendedor, qtd_produtos, valor_total) Values('2023-09-28', 'Felipe', 'Otavio', 1, 100 );
 
-INSERT INTO produtos_vendidos(nome_produto, id_venda, quantidade, subtotal, valor_unitario) Values('asd', 2, 1, 150, 150 );
-INSERT INTO produtos_vendidos(nome_produto, id_venda, quantidade, subtotal, valor_unitario) Values('dasd', 2, 1, 150, 150 );
-INSERT INTO produtos_vendidos(nome_produto, id_venda, quantidade, subtotal, valor_unitario) Values('asd', 3, 2, 200, 200 );
-INSERT INTO produtos_vendidos(nome_produto, id_venda, quantidade, subtotal, valor_unitario) Values('dasd', 3, 1, 100, 100 );
+INSERT INTO produtos_vendidos(id_produto, id_venda, quantidade, subtotal, valor_unitario) Values(1, 2, 1, 150, 150)
+INSERT INTO produtos_vendidos(id_produto, id_venda, quantidade, subtotal, valor_unitario) Values(1, 2, 1, 150, 150)
+INSERT INTO produtos_vendidos(id_produto, id_venda, quantidade, subtotal, valor_unitario) Values(2, 3, 2, 200, 200)
+INSERT INTO produtos_vendidos(id_produto, id_venda, quantidade, subtotal, valor_unitario) Values(2, 3, 1, 100, 100)
 
+INSERT INTO bebidas (nome, marca, tipo, volume, frasco, deleted, data_registro, valor_unitario)
+VALUES ('Jack Daniels', 'Jack Daniels', 'Alcoolico', 1000 , 'vidro', 'false', '7:00:00', 300)
+INSERT INTO bebidas (nome, marca, tipo, volume, frasco, deleted, data_registro, valor_unitario)
+VALUES ('Coca-Cola', 'Coca-Cola', 'Refrigerante', 2000 , 'plastico', 'false', '9:00:00', 10)
+INSERT INTO bebidas (nome, marca, tipo, volume, frasco, deleted, data_registro, valor_unitario)
+VALUES ('Agua Mineral', 'Agua da Pedra', 'Agua', 1000 , 'plastico', 'false', '7:00:00', 300)
 
 
