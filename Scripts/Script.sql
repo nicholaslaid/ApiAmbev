@@ -66,11 +66,6 @@ CREATE TABLE IF NOT EXISTS produtos_vendidos(
 );
 
 
-select v.id, p.nome_produto, p.quantidade, p.valor_unitario, p.subtotal
-from produtos_vendidos p, vendas v
-where p.id_venda = v.id
-
-
 INSERT INTO cliente(nome, endereco, email, telefone) Values('Luiz', 'rua barea 170', 'luiz@gmail.com', '2132131123');
 INSERT INTO cliente(nome, endereco, email, telefone) Values('Joao', 'rua julio de castilhos 170', 'joao@gmail.com', '324324234');
 INSERT INTO cliente(nome, endereco, email, telefone) Values('Felipe', 'rua os 18 do forte 170', 'felipe@gmail.com', '2132131123');
